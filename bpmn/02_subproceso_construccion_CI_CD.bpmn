@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_02_subproceso_construccion_CI_CD" targetNamespace="http://upao.edu.pe/sii/s12" exporter="bpmn_gen.py" exporterVersion="1.0">
+  <bpmn:collaboration id="Collab_02_subproceso_construccion_CI_CD">
+    <bpmn:participant id="Part_eq" name="Equipo del módulo CRM" processRef="Process_eq"/>
+    <bpmn:participant id="Part_mod" name="Módulos del supergrupo hotelero"/>
+    <bpmn:messageFlow id="MsgFlow_02_subproceso_construccion_CI_CD_1" name="Pruebas de contrato" sourceRef="t6" targetRef="Part_mod"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_eq" name="Equipo del módulo CRM" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_eq">
+      <bpmn:lane id="Lane_dv" name="Desarrollador">
+        <bpmn:flowNodeRef>s</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g2</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_ci" name="Plataforma CI/CD (automatizada)">
+        <bpmn:flowNodeRef>t4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t6</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_qa" name="Tester (QA)">
+        <bpmn:flowNodeRef>t7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>e</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="s" name="Sprint planificado">
+      <bpmn:outgoing>Flow_02_subproceso_construccion_CI_CD_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="t1" name="Tomar la historia del tablero y crear la rama">
+      <bpmn:incoming>Flow_02_subproceso_construccion_CI_CD_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_02_subproceso_construccion_CI_CD_2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="t2" name="Codificar y escribir pruebas unitarias">
+      <bpmn:incoming>Flow_02_subproceso_construccion_CI_CD_2</bpmn:incoming>
+      <bpmn:incoming>Flow_02_subproceso_construccion_CI_CD_6</bpmn:incoming>
+      <bpmn:incoming>Flow_02_subproceso_construccion_CI_CD_9</bpmn:incoming>
+      <bpmn:incoming>Flow_02_subproceso_construccion_CI_CD_13</bpmn:incoming>
+      <bpmn:outgoing>Flow_02_subproceso_construccion_CI_CD_3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="t3" name="Abrir solicitud de integración (pull request)">
+      <bpmn:incoming>Flow_02_subproceso_construccion_CI_CD_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_02_subproceso_construccion_CI_CD_4</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="t4" name="Compilar y ejecutar pruebas automáticas">
+      <bpmn:incoming>Flow_02_subproceso_construccion_CI_CD_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_02_subproceso_construccion_CI_CD_5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="g1" name="¿Pipeline exitoso?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_02_subproceso_construccion_CI_CD_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_02_subproceso_construccion_CI_CD_6</bpmn:outgoing>
+      <bpmn:outgoing>Flow_02_subproceso_construccion_CI_CD_7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="t5" name="Revisar el código (revisión por pares)">
+      <bpmn:incoming>Flow_02_subproceso_construccion_CI_CD_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_02_subproceso_construccion_CI_CD_8</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="g2" name="¿Cambios aprobados?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_02_subproceso_construccion_CI_CD_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_02_subproceso_construccion_CI_CD_9</bpmn:outgoing>
+      <bpmn:outgoing>Flow_02_subproceso_construccion_CI_CD_10</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="t6" name="Fusionar y desplegar en pruebas">
+      <bpmn:incoming>Flow_02_subproceso_construccion_CI_CD_10</bpmn:incoming>
+      <bpmn:outgoing>Flow_02_subproceso_construccion_CI_CD_11</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="t7" name="Ejecutar pruebas funcionales y de integración">
+      <bpmn:incoming>Flow_02_subproceso_construccion_CI_CD_11</bpmn:incoming>
+      <bpmn:outgoing>Flow_02_subproceso_construccion_CI_CD_12</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="g3" name="¿Cumple criterios de aceptación?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_02_subproceso_construccion_CI_CD_12</bpmn:incoming>
+      <bpmn:outgoing>Flow_02_subproceso_construccion_CI_CD_13</bpmn:outgoing>
+      <bpmn:outgoing>Flow_02_subproceso_construccion_CI_CD_14</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="e" name="Incremento listo">
+      <bpmn:incoming>Flow_02_subproceso_construccion_CI_CD_14</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_02_subproceso_construccion_CI_CD_1" name="" sourceRef="s" targetRef="t1"/>
+    <bpmn:sequenceFlow id="Flow_02_subproceso_construccion_CI_CD_2" name="" sourceRef="t1" targetRef="t2"/>
+    <bpmn:sequenceFlow id="Flow_02_subproceso_construccion_CI_CD_3" name="" sourceRef="t2" targetRef="t3"/>
+    <bpmn:sequenceFlow id="Flow_02_subproceso_construccion_CI_CD_4" name="" sourceRef="t3" targetRef="t4"/>
+    <bpmn:sequenceFlow id="Flow_02_subproceso_construccion_CI_CD_5" name="" sourceRef="t4" targetRef="g1"/>
+    <bpmn:sequenceFlow id="Flow_02_subproceso_construccion_CI_CD_6" name="No" sourceRef="g1" targetRef="t2"/>
+    <bpmn:sequenceFlow id="Flow_02_subproceso_construccion_CI_CD_7" name="Sí" sourceRef="g1" targetRef="t5"/>
+    <bpmn:sequenceFlow id="Flow_02_subproceso_construccion_CI_CD_8" name="" sourceRef="t5" targetRef="g2"/>
+    <bpmn:sequenceFlow id="Flow_02_subproceso_construccion_CI_CD_9" name="No" sourceRef="g2" targetRef="t2"/>
+    <bpmn:sequenceFlow id="Flow_02_subproceso_construccion_CI_CD_10" name="Sí" sourceRef="g2" targetRef="t6"/>
+    <bpmn:sequenceFlow id="Flow_02_subproceso_construccion_CI_CD_11" name="" sourceRef="t6" targetRef="t7"/>
+    <bpmn:sequenceFlow id="Flow_02_subproceso_construccion_CI_CD_12" name="" sourceRef="t7" targetRef="g3"/>
+    <bpmn:sequenceFlow id="Flow_02_subproceso_construccion_CI_CD_13" name="No" sourceRef="g3" targetRef="t2"/>
+    <bpmn:sequenceFlow id="Flow_02_subproceso_construccion_CI_CD_14" name="Sí" sourceRef="g3" targetRef="e"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_02_subproceso_construccion_CI_CD" name="Subproceso mejorado: construir y probar el incremento con integración continua">
+    <bpmndi:BPMNPlane id="Plane_02_subproceso_construccion_CI_CD" bpmnElement="Collab_02_subproceso_construccion_CI_CD">
+      <bpmndi:BPMNShape id="Part_eq_di" bpmnElement="Part_eq" isHorizontal="true"><dc:Bounds x="0" y="0" width="1358" height="354"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_dv_di" bpmnElement="Lane_dv" isHorizontal="true"><dc:Bounds x="30" y="0" width="1328" height="118"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_ci_di" bpmnElement="Lane_ci" isHorizontal="true"><dc:Bounds x="30" y="118" width="1328" height="118"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_qa_di" bpmnElement="Lane_qa" isHorizontal="true"><dc:Bounds x="30" y="236" width="1328" height="118"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Part_mod_di" bpmnElement="Part_mod" isHorizontal="true"><dc:Bounds x="0" y="398" width="1358" height="54"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="s_di" bpmnElement="s"><dc:Bounds x="127" y="41" width="36" height="36"/><bpmndi:BPMNLabel><dc:Bounds x="90" y="79" width="110" height="28"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t1_di" bpmnElement="t1"><dc:Bounds x="196" y="26" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t2_di" bpmnElement="t2"><dc:Bounds x="318" y="26" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t3_di" bpmnElement="t3"><dc:Bounds x="440" y="26" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t4_di" bpmnElement="t4"><dc:Bounds x="531" y="144" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g1_di" bpmnElement="g1" isMarkerVisible="true"><dc:Bounds x="665" y="154" width="46" height="46"/><bpmndi:BPMNLabel><dc:Bounds x="633" y="202" width="110" height="28"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t5_di" bpmnElement="t5"><dc:Bounds x="726" y="26" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g2_di" bpmnElement="g2" isMarkerVisible="true"><dc:Bounds x="854" y="36" width="46" height="46"/><bpmndi:BPMNLabel><dc:Bounds x="822" y="84" width="110" height="28"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t6_di" bpmnElement="t6"><dc:Bounds x="916" y="144" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t7_di" bpmnElement="t7"><dc:Bounds x="1019" y="262" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g3_di" bpmnElement="g3" isMarkerVisible="true"><dc:Bounds x="1153" y="272" width="46" height="46"/><bpmndi:BPMNLabel><dc:Bounds x="1121" y="320" width="110" height="28"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="e_di" bpmnElement="e"><dc:Bounds x="1262" y="277" width="36" height="36"/><bpmndi:BPMNLabel><dc:Bounds x="1225" y="315" width="110" height="28"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_02_subproceso_construccion_CI_CD_1_di" bpmnElement="Flow_02_subproceso_construccion_CI_CD_1"><di:waypoint x="163" y="59"/><di:waypoint x="196" y="59"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02_subproceso_construccion_CI_CD_2_di" bpmnElement="Flow_02_subproceso_construccion_CI_CD_2"><di:waypoint x="302" y="59"/><di:waypoint x="318" y="59"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02_subproceso_construccion_CI_CD_3_di" bpmnElement="Flow_02_subproceso_construccion_CI_CD_3"><di:waypoint x="424" y="59"/><di:waypoint x="440" y="59"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02_subproceso_construccion_CI_CD_4_di" bpmnElement="Flow_02_subproceso_construccion_CI_CD_4"><di:waypoint x="546" y="59"/><di:waypoint x="584" y="59"/><di:waypoint x="584" y="144"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02_subproceso_construccion_CI_CD_5_di" bpmnElement="Flow_02_subproceso_construccion_CI_CD_5"><di:waypoint x="637" y="177"/><di:waypoint x="665" y="177"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02_subproceso_construccion_CI_CD_6_di" bpmnElement="Flow_02_subproceso_construccion_CI_CD_6"><di:waypoint x="688" y="154"/><di:waypoint x="688" y="16"/><di:waypoint x="371" y="16"/><di:waypoint x="371" y="26"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02_subproceso_construccion_CI_CD_7_di" bpmnElement="Flow_02_subproceso_construccion_CI_CD_7"><di:waypoint x="711" y="177"/><di:waypoint x="779" y="177"/><di:waypoint x="779" y="92"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02_subproceso_construccion_CI_CD_8_di" bpmnElement="Flow_02_subproceso_construccion_CI_CD_8"><di:waypoint x="832" y="59"/><di:waypoint x="854" y="59"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02_subproceso_construccion_CI_CD_9_di" bpmnElement="Flow_02_subproceso_construccion_CI_CD_9"><di:waypoint x="877" y="82"/><di:waypoint x="877" y="110"/><di:waypoint x="371" y="110"/><di:waypoint x="371" y="92"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02_subproceso_construccion_CI_CD_10_di" bpmnElement="Flow_02_subproceso_construccion_CI_CD_10"><di:waypoint x="900" y="59"/><di:waypoint x="968" y="59"/><di:waypoint x="968" y="144"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02_subproceso_construccion_CI_CD_11_di" bpmnElement="Flow_02_subproceso_construccion_CI_CD_11"><di:waypoint x="1022" y="177"/><di:waypoint x="1072" y="177"/><di:waypoint x="1072" y="262"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02_subproceso_construccion_CI_CD_12_di" bpmnElement="Flow_02_subproceso_construccion_CI_CD_12"><di:waypoint x="1125" y="295"/><di:waypoint x="1153" y="295"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02_subproceso_construccion_CI_CD_13_di" bpmnElement="Flow_02_subproceso_construccion_CI_CD_13"><di:waypoint x="1176" y="272"/><di:waypoint x="1176" y="8"/><di:waypoint x="371" y="8"/><di:waypoint x="371" y="26"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02_subproceso_construccion_CI_CD_14_di" bpmnElement="Flow_02_subproceso_construccion_CI_CD_14"><di:waypoint x="1199" y="295"/><di:waypoint x="1262" y="295"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="MsgFlow_02_subproceso_construccion_CI_CD_1_di" bpmnElement="MsgFlow_02_subproceso_construccion_CI_CD_1"><di:waypoint x="968" y="210"/><di:waypoint x="968" y="398"/></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

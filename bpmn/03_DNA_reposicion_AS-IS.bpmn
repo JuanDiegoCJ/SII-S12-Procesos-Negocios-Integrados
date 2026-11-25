@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_03_DNA_reposicion_AS-IS" targetNamespace="http://upao.edu.pe/sii/s12" exporter="bpmn_gen.py" exporterVersion="1.0">
+  <bpmn:collaboration id="Collab_03_DNA_reposicion_AS-IS">
+    <bpmn:participant id="Part_cli" name="Supermercado (cliente)"/>
+    <bpmn:participant id="Part_dna" name="Distribuidora Nacional de Alimentos" processRef="Process_dna"/>
+    <bpmn:participant id="Part_prv" name="Proveedor"/>
+    <bpmn:messageFlow id="MsgFlow_03_DNA_reposicion_AS-IS_1" name="Pedido" sourceRef="Part_cli" targetRef="s"/>
+    <bpmn:messageFlow id="MsgFlow_03_DNA_reposicion_AS-IS_2" name="Orden de compra" sourceRef="t5" targetRef="Part_prv"/>
+    <bpmn:messageFlow id="MsgFlow_03_DNA_reposicion_AS-IS_3" name="Mercadería" sourceRef="Part_prv" targetRef="t6"/>
+    <bpmn:messageFlow id="MsgFlow_03_DNA_reposicion_AS-IS_4" name="Entrega" sourceRef="t9" targetRef="Part_cli"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_dna" name="Distribuidora Nacional de Alimentos" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_dna">
+      <bpmn:lane id="Lane_com" name="Área comercial">
+        <bpmn:flowNodeRef>s</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t2</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_alm" name="Almacén">
+        <bpmn:flowNodeRef>t3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t8</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_cmp" name="Compras">
+        <bpmn:flowNodeRef>t4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t5</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_dis" name="Distribución">
+        <bpmn:flowNodeRef>t9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>e</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="s" name="Pedido recibido por teléfono o correo">
+      <bpmn:outgoing>Flow_03_DNA_reposicion_AS-IS_1</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MED_s"/>
+    </bpmn:startEvent>
+    <bpmn:manualTask id="t1" name="Registrar el pedido en una hoja de cálculo">
+      <bpmn:incoming>Flow_03_DNA_reposicion_AS-IS_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_03_DNA_reposicion_AS-IS_2</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sendTask id="t2" name="Enviar el pedido por correo al almacén">
+      <bpmn:incoming>Flow_03_DNA_reposicion_AS-IS_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_03_DNA_reposicion_AS-IS_3</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:manualTask id="t3" name="Revisar el correo y el kárdex manual">
+      <bpmn:incoming>Flow_03_DNA_reposicion_AS-IS_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_03_DNA_reposicion_AS-IS_4</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:exclusiveGateway id="g1" name="¿Hay stock?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_03_DNA_reposicion_AS-IS_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_03_DNA_reposicion_AS-IS_5</bpmn:outgoing>
+      <bpmn:outgoing>Flow_03_DNA_reposicion_AS-IS_6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:manualTask id="t4" name="Reenviar el requerimiento por correo">
+      <bpmn:incoming>Flow_03_DNA_reposicion_AS-IS_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_03_DNA_reposicion_AS-IS_7</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="t5" name="Cotizar y emitir la orden de compra">
+      <bpmn:incoming>Flow_03_DNA_reposicion_AS-IS_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_03_DNA_reposicion_AS-IS_8</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="t6" name="Recibir mercadería y anotar en el kárdex">
+      <bpmn:incoming>Flow_03_DNA_reposicion_AS-IS_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_03_DNA_reposicion_AS-IS_9</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:exclusiveGateway id="g2" name="" gatewayDirection="Converging">
+      <bpmn:incoming>Flow_03_DNA_reposicion_AS-IS_6</bpmn:incoming>
+      <bpmn:incoming>Flow_03_DNA_reposicion_AS-IS_9</bpmn:incoming>
+      <bpmn:outgoing>Flow_03_DNA_reposicion_AS-IS_10</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:manualTask id="t7" name="Preparar el pedido manualmente">
+      <bpmn:incoming>Flow_03_DNA_reposicion_AS-IS_10</bpmn:incoming>
+      <bpmn:outgoing>Flow_03_DNA_reposicion_AS-IS_11</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="t8" name="Despachar y anotar la salida">
+      <bpmn:incoming>Flow_03_DNA_reposicion_AS-IS_11</bpmn:incoming>
+      <bpmn:outgoing>Flow_03_DNA_reposicion_AS-IS_12</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="t9" name="Programar el transporte y entregar">
+      <bpmn:incoming>Flow_03_DNA_reposicion_AS-IS_12</bpmn:incoming>
+      <bpmn:outgoing>Flow_03_DNA_reposicion_AS-IS_13</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:endEvent id="e" name="Pedido entregado con demora">
+      <bpmn:incoming>Flow_03_DNA_reposicion_AS-IS_13</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_03_DNA_reposicion_AS-IS_1" name="" sourceRef="s" targetRef="t1"/>
+    <bpmn:sequenceFlow id="Flow_03_DNA_reposicion_AS-IS_2" name="" sourceRef="t1" targetRef="t2"/>
+    <bpmn:sequenceFlow id="Flow_03_DNA_reposicion_AS-IS_3" name="" sourceRef="t2" targetRef="t3"/>
+    <bpmn:sequenceFlow id="Flow_03_DNA_reposicion_AS-IS_4" name="" sourceRef="t3" targetRef="g1"/>
+    <bpmn:sequenceFlow id="Flow_03_DNA_reposicion_AS-IS_5" name="No" sourceRef="g1" targetRef="t4"/>
+    <bpmn:sequenceFlow id="Flow_03_DNA_reposicion_AS-IS_6" name="Sí" sourceRef="g1" targetRef="g2"/>
+    <bpmn:sequenceFlow id="Flow_03_DNA_reposicion_AS-IS_7" name="" sourceRef="t4" targetRef="t5"/>
+    <bpmn:sequenceFlow id="Flow_03_DNA_reposicion_AS-IS_8" name="" sourceRef="t5" targetRef="t6"/>
+    <bpmn:sequenceFlow id="Flow_03_DNA_reposicion_AS-IS_9" name="" sourceRef="t6" targetRef="g2"/>
+    <bpmn:sequenceFlow id="Flow_03_DNA_reposicion_AS-IS_10" name="" sourceRef="g2" targetRef="t7"/>
+    <bpmn:sequenceFlow id="Flow_03_DNA_reposicion_AS-IS_11" name="" sourceRef="t7" targetRef="t8"/>
+    <bpmn:sequenceFlow id="Flow_03_DNA_reposicion_AS-IS_12" name="" sourceRef="t8" targetRef="t9"/>
+    <bpmn:sequenceFlow id="Flow_03_DNA_reposicion_AS-IS_13" name="" sourceRef="t9" targetRef="e"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_03_DNA_reposicion_AS-IS" name="Distribuidora Nacional de Alimentos: proceso actual de pedido y reposición">
+    <bpmndi:BPMNPlane id="Plane_03_DNA_reposicion_AS-IS" bpmnElement="Collab_03_DNA_reposicion_AS-IS">
+      <bpmndi:BPMNShape id="Part_cli_di" bpmnElement="Part_cli" isHorizontal="true"><dc:Bounds x="0" y="0" width="1456" height="54"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Part_dna_di" bpmnElement="Part_dna" isHorizontal="true"><dc:Bounds x="0" y="98" width="1456" height="448"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_com_di" bpmnElement="Lane_com" isHorizontal="true"><dc:Bounds x="30" y="98" width="1426" height="112"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_alm_di" bpmnElement="Lane_alm" isHorizontal="true"><dc:Bounds x="30" y="210" width="1426" height="112"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_cmp_di" bpmnElement="Lane_cmp" isHorizontal="true"><dc:Bounds x="30" y="322" width="1426" height="112"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_dis_di" bpmnElement="Lane_dis" isHorizontal="true"><dc:Bounds x="30" y="434" width="1426" height="112"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Part_prv_di" bpmnElement="Part_prv" isHorizontal="true"><dc:Bounds x="0" y="590" width="1456" height="54"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="s_di" bpmnElement="s"><dc:Bounds x="127" y="136" width="36" height="36"/><bpmndi:BPMNLabel><dc:Bounds x="90" y="174" width="110" height="28"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t1_di" bpmnElement="t1"><dc:Bounds x="196" y="121" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t2_di" bpmnElement="t2"><dc:Bounds x="318" y="121" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t3_di" bpmnElement="t3"><dc:Bounds x="409" y="233" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g1_di" bpmnElement="g1" isMarkerVisible="true"><dc:Bounds x="543" y="243" width="46" height="46"/><bpmndi:BPMNLabel><dc:Bounds x="511" y="291" width="110" height="28"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t4_di" bpmnElement="t4"><dc:Bounds x="604" y="345" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t5_di" bpmnElement="t5"><dc:Bounds x="726" y="345" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t6_di" bpmnElement="t6"><dc:Bounds x="818" y="233" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g2_di" bpmnElement="g2" isMarkerVisible="true"><dc:Bounds x="946" y="243" width="46" height="46"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t7_di" bpmnElement="t7"><dc:Bounds x="1007" y="233" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t8_di" bpmnElement="t8"><dc:Bounds x="1129" y="233" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t9_di" bpmnElement="t9"><dc:Bounds x="1220" y="457" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="e_di" bpmnElement="e"><dc:Bounds x="1359" y="472" width="36" height="36"/><bpmndi:BPMNLabel><dc:Bounds x="1322" y="510" width="110" height="28"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_03_DNA_reposicion_AS-IS_1_di" bpmnElement="Flow_03_DNA_reposicion_AS-IS_1"><di:waypoint x="163" y="154"/><di:waypoint x="196" y="154"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03_DNA_reposicion_AS-IS_2_di" bpmnElement="Flow_03_DNA_reposicion_AS-IS_2"><di:waypoint x="302" y="154"/><di:waypoint x="318" y="154"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03_DNA_reposicion_AS-IS_3_di" bpmnElement="Flow_03_DNA_reposicion_AS-IS_3"><di:waypoint x="424" y="154"/><di:waypoint x="462" y="154"/><di:waypoint x="462" y="233"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03_DNA_reposicion_AS-IS_4_di" bpmnElement="Flow_03_DNA_reposicion_AS-IS_4"><di:waypoint x="515" y="266"/><di:waypoint x="543" y="266"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03_DNA_reposicion_AS-IS_5_di" bpmnElement="Flow_03_DNA_reposicion_AS-IS_5"><di:waypoint x="589" y="266"/><di:waypoint x="657" y="266"/><di:waypoint x="657" y="345"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03_DNA_reposicion_AS-IS_6_di" bpmnElement="Flow_03_DNA_reposicion_AS-IS_6"><di:waypoint x="566" y="243"/><di:waypoint x="566" y="222"/><di:waypoint x="968" y="222"/><di:waypoint x="968" y="243"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03_DNA_reposicion_AS-IS_7_di" bpmnElement="Flow_03_DNA_reposicion_AS-IS_7"><di:waypoint x="710" y="378"/><di:waypoint x="726" y="378"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03_DNA_reposicion_AS-IS_8_di" bpmnElement="Flow_03_DNA_reposicion_AS-IS_8"><di:waypoint x="832" y="378"/><di:waypoint x="871" y="378"/><di:waypoint x="871" y="299"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03_DNA_reposicion_AS-IS_9_di" bpmnElement="Flow_03_DNA_reposicion_AS-IS_9"><di:waypoint x="924" y="266"/><di:waypoint x="946" y="266"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03_DNA_reposicion_AS-IS_10_di" bpmnElement="Flow_03_DNA_reposicion_AS-IS_10"><di:waypoint x="992" y="266"/><di:waypoint x="1007" y="266"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03_DNA_reposicion_AS-IS_11_di" bpmnElement="Flow_03_DNA_reposicion_AS-IS_11"><di:waypoint x="1113" y="266"/><di:waypoint x="1129" y="266"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03_DNA_reposicion_AS-IS_12_di" bpmnElement="Flow_03_DNA_reposicion_AS-IS_12"><di:waypoint x="1235" y="266"/><di:waypoint x="1274" y="266"/><di:waypoint x="1274" y="457"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03_DNA_reposicion_AS-IS_13_di" bpmnElement="Flow_03_DNA_reposicion_AS-IS_13"><di:waypoint x="1326" y="490"/><di:waypoint x="1359" y="490"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="MsgFlow_03_DNA_reposicion_AS-IS_1_di" bpmnElement="MsgFlow_03_DNA_reposicion_AS-IS_1"><di:waypoint x="145" y="54"/><di:waypoint x="145" y="136"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="MsgFlow_03_DNA_reposicion_AS-IS_2_di" bpmnElement="MsgFlow_03_DNA_reposicion_AS-IS_2"><di:waypoint x="779" y="411"/><di:waypoint x="779" y="590"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="MsgFlow_03_DNA_reposicion_AS-IS_3_di" bpmnElement="MsgFlow_03_DNA_reposicion_AS-IS_3"><di:waypoint x="841" y="590"/><di:waypoint x="841" y="299"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="MsgFlow_03_DNA_reposicion_AS-IS_4_di" bpmnElement="MsgFlow_03_DNA_reposicion_AS-IS_4"><di:waypoint x="1314" y="457"/><di:waypoint x="1314" y="54"/></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

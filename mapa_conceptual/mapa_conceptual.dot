@@ -1,0 +1,46 @@
+digraph MapaConceptual {
+  graph [rankdir=LR, splines=true, nodesep=0.16, ranksep=0.55, fontname="Caladea", pad=0.2, newrank=true];
+  node  [shape=box, style="rounded,filled", fontname="Caladea", fontsize=12, fillcolor="#F4F7FC", color="#1F3864", penwidth=1.2, margin="0.12,0.06"];
+  edge  [fontname="Caladea", fontsize=10.5, color="#444444", arrowsize=0.7, fontcolor="#333333"];
+
+  DNA [label="Distribuidora Nacional de Alimentos\nventas · almacén · compras", fillcolor="#FFF3D6", color="#9C7A14"];
+  PROB [label="Problemas actuales\ndemoras de 48 h · falta de sincronización\nerrores de inventario · entregas tardías\ncostos operativos crecientes", fillcolor="#FCEBEB", color="#A61B1B", fontsize=11];
+  BPI [label="PROCESOS DE NEGOCIO\nINTEGRADOS (BPI)", fillcolor="#1F3864", fontcolor="white", fontsize=14, penwidth=0, margin="0.2,0.1"];
+
+  BPMN [label="BPMN", fillcolor="#DCE6F2", fontsize=13];
+  ERP  [label="ERP", fillcolor="#DCE6F2", fontsize=13];
+  SCM  [label="SCM", fillcolor="#DCE6F2", fontsize=13];
+  AUT  [label="Automatización\nde procesos", fillcolor="#DCE6F2", fontsize=13];
+  KPI  [label="KPIs", fillcolor="#DCE6F2", fontsize=13];
+  MC   [label="Mejora continua", fillcolor="#DCE6F2", fontsize=13];
+
+  b1 [label="Modelo actual\n(AS-IS)"]; b2 [label="Modelo futuro\n(TO-BE)"]; b3 [label="Piscinas, carriles,\ntareas, eventos\ny compuertas"];
+  e1 [label="Base de datos\núnica"]; e2 [label="Módulos de ventas,\ninventario, compras\ny finanzas"];
+  s1 [label="Proveedores"]; s2 [label="Almacenes y\ndistribución"]; s3 [label="Planificación de\nla demanda"];
+  a1 [label="Pedidos por\nportal B2B / EDI"]; a2 [label="Reposición por\npunto de reorden"]; a3 [label="Código de barras\ny alertas"];
+  k1 [label="Tiempo de ciclo\ndel pedido"]; k2 [label="Exactitud del\ninventario"]; k3 [label="Entregas a\ntiempo (OTIF)"];
+  m1 [label="Ciclo PDCA\nPlanificar · Hacer\nVerificar · Actuar"];
+
+  DNA -> PROB [label=" presenta"];
+  DNA -> BPI  [label=" adopta"];
+  PROB -> BPI [label=" se eliminan con", style=dashed];
+
+  BPI -> BPMN [label="se modelan con"];
+  BPI -> ERP  [label="se soportan en"];
+  BPI -> SCM  [label="se extienden con"];
+  BPI -> AUT  [label="se agilizan con"];
+  BPI -> KPI  [label="se miden con"];
+  BPI -> MC   [label="evolucionan por"];
+
+  BPMN -> b1 [label=" describe"]; BPMN -> b2 [label=" diseña"]; BPMN -> b3 [label=" usa"];
+  ERP -> e1 [label=" centraliza en"]; ERP -> e2 [label=" integra"];
+  SCM -> s1 [label=" coordina"]; SCM -> s2 [label=" sincroniza"]; SCM -> s3 [label=" anticipa"];
+  AUT -> a1 [label=" captura"]; AUT -> a2 [label=" genera"]; AUT -> a3 [label=" controla con"];
+  KPI -> k1 [label=" mide"]; KPI -> k2 [label=" mide"]; KPI -> k3 [label=" mide"];
+  MC -> m1 [label=" aplica"];
+
+  KPI -> MC [label="orientan la", style=dashed, constraint=false];
+
+  {rank=same; DNA; PROB;}
+  {rank=same; BPMN; ERP; SCM; AUT; KPI; MC;}
+}

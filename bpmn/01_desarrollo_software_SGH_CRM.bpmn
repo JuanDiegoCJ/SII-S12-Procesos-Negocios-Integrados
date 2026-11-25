@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_01_desarrollo_software_SGH_CRM" targetNamespace="http://upao.edu.pe/sii/s12" exporter="bpmn_gen.py" exporterVersion="1.0">
+  <bpmn:collaboration id="Collab_01_desarrollo_software_SGH_CRM">
+    <bpmn:participant id="Part_doc" name="Docente del curso"/>
+    <bpmn:participant id="Part_eq" name="Equipo del módulo CRM" processRef="Process_eq"/>
+    <bpmn:participant id="Part_mod" name="Módulos del supergrupo hotelero"/>
+    <bpmn:messageFlow id="MsgFlow_01_desarrollo_software_SGH_CRM_1" name="Indicaciones del avance" sourceRef="Part_doc" targetRef="s"/>
+    <bpmn:messageFlow id="MsgFlow_01_desarrollo_software_SGH_CRM_2" name="Entregables del avance" sourceRef="t7" targetRef="Part_doc"/>
+    <bpmn:messageFlow id="MsgFlow_01_desarrollo_software_SGH_CRM_3" name="Observaciones" sourceRef="Part_doc" targetRef="e1"/>
+    <bpmn:messageFlow id="MsgFlow_01_desarrollo_software_SGH_CRM_4" name="Contratos de eventos y API" sourceRef="t4" targetRef="Part_mod"/>
+    <bpmn:messageFlow id="MsgFlow_01_desarrollo_software_SGH_CRM_5" name="Pruebas de integración" sourceRef="sp" targetRef="Part_mod"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_eq" name="Equipo del módulo CRM" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_eq">
+      <bpmn:lane id="Lane_jp" name="Jefe de proyecto (Scrum Master)">
+        <bpmn:flowNodeRef>s</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>e1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>e</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_an" name="Analista de negocio">
+        <bpmn:flowNodeRef>t2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t3</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_ar" name="Arquitecto y diseñador UX/UI">
+        <bpmn:flowNodeRef>t4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t5</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_dv" name="Desarrolladores y tester">
+        <bpmn:flowNodeRef>sp</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="s" name="Avance asignado">
+      <bpmn:outgoing>Flow_01_desarrollo_software_SGH_CRM_1</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MED_s"/>
+    </bpmn:startEvent>
+    <bpmn:userTask id="t1" name="Revisar alcance y actualizar el backlog">
+      <bpmn:incoming>Flow_01_desarrollo_software_SGH_CRM_1</bpmn:incoming>
+      <bpmn:incoming>Flow_01_desarrollo_software_SGH_CRM_13</bpmn:incoming>
+      <bpmn:outgoing>Flow_01_desarrollo_software_SGH_CRM_2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="t2" name="Levantar requerimientos y casos de uso">
+      <bpmn:incoming>Flow_01_desarrollo_software_SGH_CRM_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_01_desarrollo_software_SGH_CRM_3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:task id="t3" name="Modelar procesos de negocio en BPMN">
+      <bpmn:incoming>Flow_01_desarrollo_software_SGH_CRM_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_01_desarrollo_software_SGH_CRM_4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="t4" name="Diseñar modelo de datos y contratos de integración">
+      <bpmn:incoming>Flow_01_desarrollo_software_SGH_CRM_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_01_desarrollo_software_SGH_CRM_5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="t5" name="Prototipar interfaces UX/UI">
+      <bpmn:incoming>Flow_01_desarrollo_software_SGH_CRM_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_01_desarrollo_software_SGH_CRM_6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:userTask id="t6" name="Planificar el sprint y asignar tareas">
+      <bpmn:incoming>Flow_01_desarrollo_software_SGH_CRM_6</bpmn:incoming>
+      <bpmn:incoming>Flow_01_desarrollo_software_SGH_CRM_11</bpmn:incoming>
+      <bpmn:outgoing>Flow_01_desarrollo_software_SGH_CRM_7</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:subProcess id="sp" name="Construir y probar el incremento">
+      <bpmn:incoming>Flow_01_desarrollo_software_SGH_CRM_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_01_desarrollo_software_SGH_CRM_8</bpmn:outgoing>
+    </bpmn:subProcess>
+    <bpmn:sendTask id="t7" name="Consolidar documentación y presentar el avance">
+      <bpmn:incoming>Flow_01_desarrollo_software_SGH_CRM_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_01_desarrollo_software_SGH_CRM_9</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:intermediateCatchEvent id="e1" name="Retroalimentación recibida">
+      <bpmn:incoming>Flow_01_desarrollo_software_SGH_CRM_9</bpmn:incoming>
+      <bpmn:outgoing>Flow_01_desarrollo_software_SGH_CRM_10</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MED_e1"/>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:exclusiveGateway id="g1" name="¿Requiere ajustes?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_01_desarrollo_software_SGH_CRM_10</bpmn:incoming>
+      <bpmn:outgoing>Flow_01_desarrollo_software_SGH_CRM_11</bpmn:outgoing>
+      <bpmn:outgoing>Flow_01_desarrollo_software_SGH_CRM_12</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="g2" name="¿Último avance?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_01_desarrollo_software_SGH_CRM_12</bpmn:incoming>
+      <bpmn:outgoing>Flow_01_desarrollo_software_SGH_CRM_13</bpmn:outgoing>
+      <bpmn:outgoing>Flow_01_desarrollo_software_SGH_CRM_14</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="t8" name="Desplegar versión final y cerrar el proyecto">
+      <bpmn:incoming>Flow_01_desarrollo_software_SGH_CRM_14</bpmn:incoming>
+      <bpmn:outgoing>Flow_01_desarrollo_software_SGH_CRM_15</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="e" name="Módulo CRM entregado">
+      <bpmn:incoming>Flow_01_desarrollo_software_SGH_CRM_15</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_01_desarrollo_software_SGH_CRM_1" name="" sourceRef="s" targetRef="t1"/>
+    <bpmn:sequenceFlow id="Flow_01_desarrollo_software_SGH_CRM_2" name="" sourceRef="t1" targetRef="t2"/>
+    <bpmn:sequenceFlow id="Flow_01_desarrollo_software_SGH_CRM_3" name="" sourceRef="t2" targetRef="t3"/>
+    <bpmn:sequenceFlow id="Flow_01_desarrollo_software_SGH_CRM_4" name="" sourceRef="t3" targetRef="t4"/>
+    <bpmn:sequenceFlow id="Flow_01_desarrollo_software_SGH_CRM_5" name="" sourceRef="t4" targetRef="t5"/>
+    <bpmn:sequenceFlow id="Flow_01_desarrollo_software_SGH_CRM_6" name="" sourceRef="t5" targetRef="t6"/>
+    <bpmn:sequenceFlow id="Flow_01_desarrollo_software_SGH_CRM_7" name="" sourceRef="t6" targetRef="sp"/>
+    <bpmn:sequenceFlow id="Flow_01_desarrollo_software_SGH_CRM_8" name="" sourceRef="sp" targetRef="t7"/>
+    <bpmn:sequenceFlow id="Flow_01_desarrollo_software_SGH_CRM_9" name="" sourceRef="t7" targetRef="e1"/>
+    <bpmn:sequenceFlow id="Flow_01_desarrollo_software_SGH_CRM_10" name="" sourceRef="e1" targetRef="g1"/>
+    <bpmn:sequenceFlow id="Flow_01_desarrollo_software_SGH_CRM_11" name="Sí" sourceRef="g1" targetRef="t6"/>
+    <bpmn:sequenceFlow id="Flow_01_desarrollo_software_SGH_CRM_12" name="No" sourceRef="g1" targetRef="g2"/>
+    <bpmn:sequenceFlow id="Flow_01_desarrollo_software_SGH_CRM_13" name="No" sourceRef="g2" targetRef="t1"/>
+    <bpmn:sequenceFlow id="Flow_01_desarrollo_software_SGH_CRM_14" name="Sí" sourceRef="g2" targetRef="t8"/>
+    <bpmn:sequenceFlow id="Flow_01_desarrollo_software_SGH_CRM_15" name="" sourceRef="t8" targetRef="e"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_01_desarrollo_software_SGH_CRM" name="Proceso de desarrollo del módulo CRM del Sistema de Gestión Hotelera con IA">
+    <bpmndi:BPMNPlane id="Plane_01_desarrollo_software_SGH_CRM" bpmnElement="Collab_01_desarrollo_software_SGH_CRM">
+      <bpmndi:BPMNShape id="Part_doc_di" bpmnElement="Part_doc" isHorizontal="true"><dc:Bounds x="0" y="0" width="1511" height="54"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Part_eq_di" bpmnElement="Part_eq" isHorizontal="true"><dc:Bounds x="0" y="98" width="1511" height="448"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_jp_di" bpmnElement="Lane_jp" isHorizontal="true"><dc:Bounds x="30" y="98" width="1481" height="112"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_an_di" bpmnElement="Lane_an" isHorizontal="true"><dc:Bounds x="30" y="210" width="1481" height="112"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_ar_di" bpmnElement="Lane_ar" isHorizontal="true"><dc:Bounds x="30" y="322" width="1481" height="112"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_dv_di" bpmnElement="Lane_dv" isHorizontal="true"><dc:Bounds x="30" y="434" width="1481" height="112"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Part_mod_di" bpmnElement="Part_mod" isHorizontal="true"><dc:Bounds x="0" y="590" width="1511" height="54"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="s_di" bpmnElement="s"><dc:Bounds x="127" y="136" width="36" height="36"/><bpmndi:BPMNLabel><dc:Bounds x="90" y="174" width="110" height="28"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t1_di" bpmnElement="t1"><dc:Bounds x="196" y="121" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t2_di" bpmnElement="t2"><dc:Bounds x="287" y="233" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t3_di" bpmnElement="t3"><dc:Bounds x="409" y="233" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t4_di" bpmnElement="t4"><dc:Bounds x="501" y="345" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t5_di" bpmnElement="t5"><dc:Bounds x="623" y="345" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t6_di" bpmnElement="t6"><dc:Bounds x="714" y="121" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sp_di" bpmnElement="sp" isExpanded="false"><dc:Bounds x="806" y="457" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t7_di" bpmnElement="t7"><dc:Bounds x="897" y="121" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="e1_di" bpmnElement="e1"><dc:Bounds x="1036" y="136" width="36" height="36"/><bpmndi:BPMNLabel><dc:Bounds x="999" y="174" width="110" height="28"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g1_di" bpmnElement="g1" isMarkerVisible="true"><dc:Bounds x="1110" y="131" width="46" height="46"/><bpmndi:BPMNLabel><dc:Bounds x="1078" y="179" width="110" height="28"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g2_di" bpmnElement="g2" isMarkerVisible="true"><dc:Bounds x="1202" y="131" width="46" height="46"/><bpmndi:BPMNLabel><dc:Bounds x="1170" y="179" width="110" height="28"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t8_di" bpmnElement="t8"><dc:Bounds x="1275" y="121" width="106" height="66"/></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="e_di" bpmnElement="e"><dc:Bounds x="1414" y="136" width="36" height="36"/><bpmndi:BPMNLabel><dc:Bounds x="1377" y="174" width="110" height="28"/></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_01_desarrollo_software_SGH_CRM_1_di" bpmnElement="Flow_01_desarrollo_software_SGH_CRM_1"><di:waypoint x="163" y="154"/><di:waypoint x="196" y="154"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01_desarrollo_software_SGH_CRM_2_di" bpmnElement="Flow_01_desarrollo_software_SGH_CRM_2"><di:waypoint x="302" y="154"/><di:waypoint x="340" y="154"/><di:waypoint x="340" y="233"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01_desarrollo_software_SGH_CRM_3_di" bpmnElement="Flow_01_desarrollo_software_SGH_CRM_3"><di:waypoint x="393" y="266"/><di:waypoint x="409" y="266"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01_desarrollo_software_SGH_CRM_4_di" bpmnElement="Flow_01_desarrollo_software_SGH_CRM_4"><di:waypoint x="515" y="266"/><di:waypoint x="554" y="266"/><di:waypoint x="554" y="345"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01_desarrollo_software_SGH_CRM_5_di" bpmnElement="Flow_01_desarrollo_software_SGH_CRM_5"><di:waypoint x="607" y="378"/><di:waypoint x="623" y="378"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01_desarrollo_software_SGH_CRM_6_di" bpmnElement="Flow_01_desarrollo_software_SGH_CRM_6"><di:waypoint x="729" y="378"/><di:waypoint x="767" y="378"/><di:waypoint x="767" y="187"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01_desarrollo_software_SGH_CRM_7_di" bpmnElement="Flow_01_desarrollo_software_SGH_CRM_7"><di:waypoint x="820" y="154"/><di:waypoint x="859" y="154"/><di:waypoint x="859" y="457"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01_desarrollo_software_SGH_CRM_8_di" bpmnElement="Flow_01_desarrollo_software_SGH_CRM_8"><di:waypoint x="912" y="490"/><di:waypoint x="950" y="490"/><di:waypoint x="950" y="187"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01_desarrollo_software_SGH_CRM_9_di" bpmnElement="Flow_01_desarrollo_software_SGH_CRM_9"><di:waypoint x="1003" y="154"/><di:waypoint x="1036" y="154"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01_desarrollo_software_SGH_CRM_10_di" bpmnElement="Flow_01_desarrollo_software_SGH_CRM_10"><di:waypoint x="1072" y="154"/><di:waypoint x="1110" y="154"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01_desarrollo_software_SGH_CRM_11_di" bpmnElement="Flow_01_desarrollo_software_SGH_CRM_11"><di:waypoint x="1133" y="131"/><di:waypoint x="1133" y="108"/><di:waypoint x="767" y="108"/><di:waypoint x="767" y="121"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01_desarrollo_software_SGH_CRM_12_di" bpmnElement="Flow_01_desarrollo_software_SGH_CRM_12"><di:waypoint x="1156" y="154"/><di:waypoint x="1202" y="154"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01_desarrollo_software_SGH_CRM_13_di" bpmnElement="Flow_01_desarrollo_software_SGH_CRM_13"><di:waypoint x="1225" y="131"/><di:waypoint x="1225" y="102"/><di:waypoint x="249" y="102"/><di:waypoint x="249" y="121"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01_desarrollo_software_SGH_CRM_14_di" bpmnElement="Flow_01_desarrollo_software_SGH_CRM_14"><di:waypoint x="1248" y="154"/><di:waypoint x="1275" y="154"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01_desarrollo_software_SGH_CRM_15_di" bpmnElement="Flow_01_desarrollo_software_SGH_CRM_15"><di:waypoint x="1381" y="154"/><di:waypoint x="1414" y="154"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="MsgFlow_01_desarrollo_software_SGH_CRM_1_di" bpmnElement="MsgFlow_01_desarrollo_software_SGH_CRM_1"><di:waypoint x="145" y="54"/><di:waypoint x="145" y="136"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="MsgFlow_01_desarrollo_software_SGH_CRM_2_di" bpmnElement="MsgFlow_01_desarrollo_software_SGH_CRM_2"><di:waypoint x="950" y="121"/><di:waypoint x="950" y="54"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="MsgFlow_01_desarrollo_software_SGH_CRM_3_di" bpmnElement="MsgFlow_01_desarrollo_software_SGH_CRM_3"><di:waypoint x="1054" y="54"/><di:waypoint x="1054" y="136"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="MsgFlow_01_desarrollo_software_SGH_CRM_4_di" bpmnElement="MsgFlow_01_desarrollo_software_SGH_CRM_4"><di:waypoint x="554" y="411"/><di:waypoint x="554" y="590"/></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="MsgFlow_01_desarrollo_software_SGH_CRM_5_di" bpmnElement="MsgFlow_01_desarrollo_software_SGH_CRM_5"><di:waypoint x="859" y="523"/><di:waypoint x="859" y="590"/></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

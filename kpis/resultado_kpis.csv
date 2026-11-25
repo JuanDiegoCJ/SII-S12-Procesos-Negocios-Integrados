@@ -1,0 +1,14 @@
+indicador,valor,meta,estado
+Tiempo de ciclo del pedido,38.3 h,≤ 24 h,No cumple
+Tiempo de procesamiento administrativo,17.4 h,≤ 2 h,No cumple
+Entregas a tiempo (OTD),76.5 %,≥ 95 %,No cumple
+Pedidos completos y a tiempo (OTIF),68.5 %,≥ 92 %,No cumple
+Nivel de servicio por unidades (fill rate),98.5 %,≥ 97 %,Cumple
+Pedidos con quiebre de stock,11.2 %,≤ 3 %,No cumple
+Exactitud de preparación (picking),99.5 %,≥ 99.5 %,Cumple
+Pedidos registrados sin intervención manual,4.5 %,≥ 90 %,No cumple
+Reclamos por entrega tardía,13.5 %,≤ 2 %,No cumple
+Costo operativo por pedido,63.2 S/,≤ 45 S/,No cumple
+Exactitud del inventario (IRA),87.6 %,≥ 98 %,No cumple
+Órdenes de compra recibidas a tiempo,75.0 %,≥ 95 %,No cumple
+Rotación de inventario (anualizada),14.8 veces,≥ 18 veces,No cumple
